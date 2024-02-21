@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.TopDownEngine;
+using MoreMountains.Tools;
+using System;
 
 [AddComponentMenu("TopDown Engine/Character/Abilities/CharacterFishing")]
 public class CharacterFishing : CharacterAbility
@@ -18,7 +20,8 @@ public class CharacterFishing : CharacterAbility
     public float delayWaitingList;
     public float MaxTimeQTE;
     public Transform QTEPromptTransform;
-    public GameObject prompt;
+    public ButtonPrompt prompt;
+    public ButtonPrompt SpawnedPrompt;
     public List<GameObject> SpawnedInputList;
     public List<GameObject> SpawnedWaitingInputListList;
 
@@ -40,7 +43,50 @@ public class CharacterFishing : CharacterAbility
     /// </summary>
     public override void ProcessAbility()
     {
+        if(nearWater)
+        {
+            ShowPrompt();
+        }
+        else
+        {
+            HidePrompt();
+        }
+
         base.ProcessAbility();
+    }
+
+    private void SpawnQtePrompt()
+    {
+    }
+    public virtual void ShowPrompt()
+    {
+        // we add a blinking A prompt to the top of the zone
+        if (SpawnedPrompt == null)
+        {
+            SpawnedPrompt = (ButtonPrompt)Instantiate(prompt);
+            SpawnedPrompt.Initialization();
+            //_buttonPromptAnimator = SpawnedPrompt.gameObject.MMGetComponentNoAlloc<Animator>();
+        }
+        
+        SpawnedPrompt.transform.position = QTEPromptTransform.position;
+
+        SpawnedPrompt.transform.parent = transform;
+        //SpawnedPrompt.transform.localEulerAngles = PromptRotation;
+        SpawnedPrompt.SetText("a");
+        SpawnedPrompt.SetBackgroundColor(Color.red);
+        SpawnedPrompt.SetTextColor(Color.white);
+        SpawnedPrompt.Show();
+    }
+    public virtual void HidePrompt()
+    {
+        if (SpawnedPrompt != null)
+        {
+            SpawnedPrompt.Hide();
+        }
+    }
+    public void CheckWater(bool value)
+    {
+        nearWater = value;
     }
 
     /// <summary>
@@ -50,16 +96,16 @@ public class CharacterFishing : CharacterAbility
     {
         // here as an example we check if we're pressing down
         // on our main stick/direction pad/keyboard
-        if (_inputManager.PrimaryMovement.y < -_inputManager.Threshold.y)
+        if (_inputManager.InteractButton.IsPressed && nearWater)
         {
-            DoSomething();
+            StartFishing();
         }
     }
 
     /// <summary>
     /// If we're pressing down, we check for a few conditions to see if we can perform our action
     /// </summary>
-    protected virtual void DoSomething()
+    protected virtual void StartFishing()
     {
         // if the ability is not permitted
         if (!AbilityPermitted
@@ -73,7 +119,7 @@ public class CharacterFishing : CharacterAbility
         }
 
         // if we're still here, we display a text log in the console
-        MMDebug.DebugLogTime("We're doing something yay!");
+        MMDebug.DebugLogTime("We're fishing something yay!");
     }
 
     /// <summary>

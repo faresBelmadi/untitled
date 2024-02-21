@@ -9887,6 +9887,7 @@ Transform:
   - {fileID: 210470828788380443}
   - {fileID: 7375390012173718480}
   - {fileID: 8773258298053573596}
+  - {fileID: 2769132788364479802}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50050392041868628
@@ -10454,6 +10455,16 @@ MonoBehaviour:
   BlockingMovementStates: 
   BlockingConditionStates: 
   BlockingWeaponStates: 
+  nearWater: 0
+  InputList: []
+  WaitingInputList: []
+  delayWaitingList: 0
+  MaxTimeQTE: 0
+  QTEPromptTransform: {fileID: 2769132788364479802}
+  prompt: {fileID: 114767332097364426, guid: bb1fc0f1f16f31248b9b4d80aa795609, type: 3}
+  SpawnedPrompt: {fileID: 0}
+  SpawnedInputList: []
+  SpawnedWaitingInputListList: []
 --- !u!1 &1561075265052736
 GameObject:
   m_ObjectHideFlags: 0
@@ -17838,3 +17849,34 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &8609341120083295797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2769132788364479802}
+  m_Layer: 10
+  m_Name: promptTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2769132788364479802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609341120083295797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1.61, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4001341059962208}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
